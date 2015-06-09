@@ -178,7 +178,9 @@
   [value & [opt & _]]
   (let [formatter (if (string? opt) (f/formatter opt) opt)]
     (try
-      (if formatter (f/parse formatter value) (f/parse value))
+      (if formatter
+        (clojure.core/boolean (f/parse formatter value))
+        (clojure.core/boolean (f/parse value)))
       #+clj (catch IllegalArgumentException e false)
       #+cljs (catch js/Error e false))))
 
